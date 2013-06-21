@@ -118,6 +118,15 @@ static ZipDownloader* sharedInstance = nil;
         
         for (NSString *v in allFilesArray) {
             NSLog(@"%@", v);
+            
+            //Delete unwanted __MACOSX hidden folder inside the zip file
+            if ([v isEqualToString:@"__MACOSX"]) {
+                NSError *error;
+                if (![[NSFileManager defaultManager] removeItemAtPath:[path stringByAppendingPathComponent:v] error:&error])
+                {
+                    NSLog(@"Error removing folder: %@", error);
+                };
+            }
         }
 
     }];
